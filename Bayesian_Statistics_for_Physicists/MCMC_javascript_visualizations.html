@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<!-- saved from url=(0064)http://elevanth.org/blog/2017/11/28/build-a-better-markov-chain/ -->
+<html lang="en-US">
+
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Markov Chains: Why Walk When You Can Flow? | Elements of Evolutionary Anthropology</title>              
+    <link rel="profile" href="http://gmpg.org/xfn/11">        
+    <link rel="pingback" href="http://elevanth.org/blog/xmlrpc.php"> 
+    <link rel="dns-prefetch" href="http://s0.wp.com/">
+<link rel="dns-prefetch" href="http://fonts.googleapis.com/">
+<link rel="dns-prefetch" href="http://s.w.org/">
+<link rel="alternate" type="application/rss+xml" title="Elements of Evolutionary Anthropology » Feed" href="http://elevanth.org/blog/feed/">
+<link rel="alternate" type="application/rss+xml" title="Elements of Evolutionary Anthropology » Comments Feed" href="http://elevanth.org/blog/comments/feed/">
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/11\/svg\/","svgExt":".svg","source":{"concatemoji":"http:\/\/elevanth.org\/blog\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.9.8"}};
+			!function(a,b,c){function d(a,b){var c=String.fromCharCode;l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,a),0,0);var d=k.toDataURL();l.clearRect(0,0,k.width,k.height),l.fillText(c.apply(this,b),0,0);var e=k.toDataURL();return d===e}function e(a){var b;if(!l||!l.fillText)return!1;switch(l.textBaseline="top",l.font="600 32px Arial",a){case"flag":return!(b=d([55356,56826,55356,56819],[55356,56826,8203,55356,56819]))&&(b=d([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]),!b);case"emoji":return b=d([55358,56760,9792,65039],[55358,56760,8203,9792,65039]),!b}return!1}function f(a){var c=b.createElement("script");c.src=a,c.defer=c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var g,h,i,j,k=b.createElement("canvas"),l=k.getContext&&k.getContext("2d");for(j=Array("flag","emoji"),c.supports={everything:!0,everythingExceptFlag:!0},i=0;i<j.length;i++)c.supports[j[i]]=e(j[i]),c.supports.everything=c.supports.everything&&c.supports[j[i]],"flag"!==j[i]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[j[i]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(h=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",h,!1),a.addEventListener("load",h,!1)):(a.attachEvent("onload",h),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),g=c.source||{},g.concatemoji?f(g.concatemoji):g.wpemoji&&g.twemoji&&(f(g.twemoji),f(g.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script src="./MCMC_javascript_visualizations_files/wp-emoji-release.min.js" type="text/javascript" defer=""></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="wp-quicklatex-format-css" href="./MCMC_javascript_visualizations_files/quicklatex-format.css" type="text/css" media="all">
+<link rel="stylesheet" id="tt-easy-google-fonts-css" href="./MCMC_javascript_visualizations_files/css" type="text/css" media="all">
+<link rel="stylesheet" id="dashicons-css" href="./MCMC_javascript_visualizations_files/dashicons.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="crawford_oswald-css" href="./MCMC_javascript_visualizations_files/css(1)" type="text/css" media="all">
+<link rel="stylesheet" id="crawford_domine-css" href="./MCMC_javascript_visualizations_files/css(2)" type="text/css" media="all">
+<link rel="stylesheet" id="crawford_bootstrap_css-css" href="./MCMC_javascript_visualizations_files/bootstrap.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="crawford_style-css" href="./MCMC_javascript_visualizations_files/style.css" type="text/css" media="all">
+<link rel="stylesheet" id="jetpack-widget-social-icons-styles-css" href="./MCMC_javascript_visualizations_files/social-icons.css" type="text/css" media="all">
+<link rel="stylesheet" id="social-logos-css" href="./MCMC_javascript_visualizations_files/social-logos.min.css" type="text/css" media="all">
+<link rel="stylesheet" id="jetpack_css-css" href="./MCMC_javascript_visualizations_files/jetpack.css" type="text/css" media="all">
+<script type="text/javascript" src="./MCMC_javascript_visualizations_files/jquery.js"></script>
+<script type="text/javascript" src="./MCMC_javascript_visualizations_files/jquery-migrate.min.js"></script>
+<script type="text/javascript" src="./MCMC_javascript_visualizations_files/wp-quicklatex-frontend.js"></script>
+<link rel="https://api.w.org/" href="http://elevanth.org/blog/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://elevanth.org/blog/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://elevanth.org/blog/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="Journal Clubbing: Accurate Age Estimation" href="http://elevanth.org/blog/2017/09/09/journal-clubbing-accurate-age-estimation/">
+<link rel="next" title="Algebra and the Missing Oxen" href="http://elevanth.org/blog/2018/01/29/algebra-and-missingness/">
+<meta name="generator" content="WordPress 4.9.8">
+<link rel="canonical" href="http://elevanth.org/blog/2017/11/28/build-a-better-markov-chain/">
+<link rel="shortlink" href="https://wp.me/p6D80w-bM">
+<link rel="alternate" type="application/json+oembed" href="http://elevanth.org/blog/wp-json/oembed/1.0/embed?url=http%3A%2F%2Felevanth.org%2Fblog%2F2017%2F11%2F28%2Fbuild-a-better-markov-chain%2F">
+<link rel="alternate" type="text/xml+oembed" href="http://elevanth.org/blog/wp-json/oembed/1.0/embed?url=http%3A%2F%2Felevanth.org%2Fblog%2F2017%2F11%2F28%2Fbuild-a-better-markov-chain%2F&amp;format=xml">
+
+<link rel="dns-prefetch" href="http://v0.wordpress.com/">
+<style type="text/css">img#wpstats{display:none}</style><!--[if lt IE 9]><script src="http://elevanth.org/blog/wp-content/themes/crawford/assets/js/html5shiv.js"></script><![endif]-->     <style type="text/css">
+        a, a:hover, a:focus, header nav .menu-item-has-children:hover a, header nav .menu-item-has-children:hover .sub-menu li a:hover {color:#1e73be;}    
+        article blockquote {border-color:#1e73be;}    
+     </style>
+    
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Markov Chains: Why Walk When You Can Flow?">
+<meta property="og:url" content="http://elevanth.org/blog/2017/11/28/build-a-better-markov-chain/">
+<meta property="og:description" content="Abstract: If you are still using a Gibbs sampler, you are working too hard for too little result. Newer, better algorithms trade random walks for frictionless flow. In 1989, Depeche Mode was popula…">
+<meta property="article:published_time" content="2017-11-28T20:50:01+00:00">
+<meta property="article:modified_time" content="2018-04-26T08:15:56+00:00">
+<meta property="og:site_name" content="Elements of Evolutionary Anthropology">
+<meta property="og:image" content="http://elevanth.org/blog/wp-content/uploads/2017/11/KRDx8SR-1.gif">
+<meta property="og:image:width" content="500">
+<meta property="og:image:height" content="381">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:site" content="@rlmcelreath">
+<meta name="twitter:text:title" content="Markov Chains: Why Walk When You Can Flow?">
+<meta name="twitter:card" content="summary">
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="icon" href="http://elevanth.org/blog/wp-content/uploads/2015/08/elevanth_icon_box-150x150.png" sizes="32x32">
+<link rel="icon" href="http://elevanth.org/blog/wp-content/uploads/2015/08/elevanth_icon_box-300x300.png" sizes="192x192">
+<link rel="apple-touch-icon-precomposed" href="http://elevanth.org/blog/wp-content/uploads/2015/08/elevanth_icon_box-300x300.png">
+<meta name="msapplication-TileImage" content="http://elevanth.org/blog/wp-content/uploads/2015/08/elevanth_icon_box-300x300.png">
+			<style type="text/css" id="wp-custom-css">
+				body {
+	margin-left: auto !important;
+	margin-right: auto !important;
+	font-size: 18pt !important;
+	line-height: 2;
+	font-family: "EB Garamond", ETBembo, Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", Georgia, serif;
+}
+
+input[type=text], input[type=email], input[type=password], input[type=search], textarea {
+	font-size: 2rem !important;
+	margin: 2px !important;
+	padding: 2px !important;
+}
+
+header nav .sub-menu li {
+	font-size: 16pt !important;
+}
+
+p, footer, pre.code {
+	width: 100%;
+}
+
+p.post-date {
+	font-size: 14pt !important;
+}
+
+p {
+    -webkit-font-smoothing: antialiased;
+}
+
+.widget li {
+	font-size: 14pt !important;
+	line-height: 1 !important;
+}
+
+article blockquote {
+	border-left: 0 solid #20b2aa !important;
+	padding-left: 30px;
+}
+
+h1 {
+	font-style: italic;
+	font-weight: 400;
+	margin-top: 4rem;
+	margin-bottom: 1.5rem;
+	font-size: 3.2rem;
+	line-height: 1;
+}
+
+h2 {
+	font-style: italic;
+	font-weight: 400;
+	margin-top: 2.1rem;
+	margin-bottom: 0;
+	font-size: 2.2rem;
+	line-height: 1;
+}
+
+h3 {
+	font-style: italic;
+	font-weight: 400;
+	font-size: 1.7rem;
+	margin-top: 2rem;
+	margin-bottom: 0;
+	line-height: 1;
+}
+
+h4 {
+	font-style: italic !important;
+	font-weight: 400;
+	font-size: 2.0rem !important;
+	margin-top: 2rem;
+	margin-bottom: 0;
+	line-height: 1;
+}
+
+header #site-name {
+	text-transform: none !important;
+	font-size: 48px;
+	font-style: italic;
+	color: #222;
+	font-family: "IM Fell Great Primer" !important;
+}
+
+pre {
+    padding: 10px;
+    overflow: auto;
+    font-size: 90% !important;
+    line-height: 1.45;
+    background-color: #f6f8fa;
+    border-radius: 3px;
+	  font: 13px "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.fullwidth {
+	max-width: 95%;
+}
+
+.sidenote, .marginnote {
+	float: right;
+	clear: right;
+	margin-right: -60%;
+	width: 50%;
+	margin-top: 0;
+	margin-bottom: 0;
+	font-size: 1.7rem;
+	line-height: 1.96;
+	vertical-align: baseline;
+	position: relative;
+}			</style>
+		<style id="tt-easy-google-font-styles" type="text/css">p { font-family: 'Libre Baskerville'; font-size: 17px; font-style: normal; font-weight: 400; line-height: 1.4; }
+h1 { font-family: 'IM Fell Great Primer'; font-size: 10px; font-style: italic; font-weight: 400; }
+h2 { font-family: 'IM Fell Great Primer'; font-style: italic; font-weight: 400; }
+h3 { font-family: 'IM Fell Great Primer'; font-style: italic; font-weight: 400; }
+h4 { color: #383838; font-family: 'Libre Baskerville'; font-style: italic; font-weight: 400; }
+h5 { }
+h6 { }
+</style><script type="text/javascript" charset="utf-8" async="" src="./MCMC_javascript_visualizations_files/tweet.f370c308d0fc15068ffa28ad5e204dd3.js"></script>
+</head>
+
+
+<body class="post-template-default single single-post postid-730 single-format-standard">
+
+	<div class="row" role="main">		
+				
+	<div class="col-md-8 col-md-offset-2">			
+		<article id="post-730" class="post-730 post type-post status-publish format-standard hentry category-statistics last">
+			<h1 id="post-title">Markov Chains: Comparing different samplers</h1>						
+			<p><em><strong>Abstract</strong>: If you are still using a Gibbs sampler, you are working too hard for too little result. Newer, better algorithms trade random walks for frictionless flow.</em>
+            [Adapted from a <a href="http://elevanth.org/blog/2017/11/28/build-a-better-markov-chain/">blog entry
+            by Richard McElreath</a> (@rlmcelreath).]
+			</p>
+
+<h3>Metropolis, Hastings, and the Random Walk</h3>
+
+<p>The simplest and least reliable way of building a Markov chain is the <b>Metropolis-Hastings algorithm</b>. 
+Below are embedded the MCMC simulations written by Chi Feng, found <a href="https://chi-feng.github.io/mcmc-demo/" rel="noopener" target="_blank">here</a>. The target distribution is a benign two-dimensional Gaussian—a nice Gaussian hill. You are looking down on it, with its peak in the center. The Markov chain wanders around this hill, making random proposals to move away from its current position. These proposals are represented by the arrows. Green arrows are accepted proposals. The chain moves to the new location. Red arrows are rejections.
+</p>
+
+<center><object data="./MCMC_javascript_visualizations_files/applet.html#RandomWalkMH,standard" type="text/html" width="600" height="400"></object></center>
+
+<p>As samples build up, the target distribution takes shape, as seen in the histograms on the bottom and left margins. The algorithm works, even though it blindly stumbles around the target, doing a kind of random walk.</p>
+<p>And that is exactly the problem. A major problem is that Metropolis-Hastings is a bit too random. So it spends a lot of time re-exploring the same parts of the target, and unless it is tuned just right, it will also reject a lot of proposals (the red arrows), wasting computer time.</p>
+
+<p>Here’s another simulation, this time with a harder target: a donut. The donut target might look weird, but it represents a very common target, by analogy. In high dimensions—once there are many parameters—the target distribution occupies a narrow ring (in high-dimensional space). Most of the probability mass is not near the center. Now look what happens to Metropolis-Hastings:<br>
+</p>
+
+<center><object data="./MCMC_javascript_visualizations_files/applet.html#RandomWalkMH,donut" type="text/html" width="600" height="400"></object></center>
+
+<p>Notice how the Markov chain tends to get stuck in specific regions of the donut. Not only that, but it rejects a lot of proposals (the red arrows), so it wastes a lot of computer time doing nothing. Given enough time, it can explore the entire target. But it might take a very long time indeed. When we don’t know what the target looks like in the first place, this kind of behavior is not only annoying, but also hazardous to inference.</p>
+
+<p>The fundamental problem with Metropolis-Hastings, and with Gibbs-Sampling as a special case, is that it is just too random. In simple targets, that isn’t so bad. But in even moderately complex targets, it means inference often isn’t reliable. It tends to get stuck in narrow regions of the target. There must be a better way.</p>
+
+<h3>Better Living Through Physics</h3>
+<div id="attachment_761" style="width: 410px" class="wp-caption alignright"><a href="./MCMC_javascript_visualizations_files/tumblr_n84kkuafX11tfhyyio1_500.gif"><img src="./MCMC_javascript_visualizations_files/tumblr_n84kkuafX11tfhyyio1_500.gif" alt="" width="500" height="281" class="size-full wp-image-761" scale="0"></a><p class="wp-caption-text">Can your Markov chain do this?</p></div>
+<p>If there’s a random way to do something, there’s usually a less random way that is both better and requires more thought. Instead of making random proposals, suppose instead that you run a physics simulation. Your vector of parameters is now a particle in <em>n</em>-dimensional space. The surface in this space is a giant <em>n</em>-dimensional bowl. The shape of the bowl is determined by the shape of the logarithm of the target distribution. If the target is a nice Gaussian, for example, then the log-Gaussian is a smooth parabolic bowl like this (in one-dimension):</p>
+<p><img src="./MCMC_javascript_visualizations_files/gauss_bowl.png" alt="" width="70%" height="70%" class="aligncenter size-full wp-image-764" srcset="http://elevanth.org/blog/wp-content/uploads/2017/11/gauss_bowl.png 929w, http://elevanth.org/blog/wp-content/uploads/2017/11/gauss_bowl-300x131.png 300w, http://elevanth.org/blog/wp-content/uploads/2017/11/gauss_bowl-768x336.png 768w, http://elevanth.org/blog/wp-content/uploads/2017/11/gauss_bowl-700x306.png 700w" sizes="(max-width: 929px) 100vw, 929px"></p>
+<p>To make things a little crazier, suppose that this surface is frictionless. Now what we do is flick the particle in a random direction. It will frictionlessly flow across the bowl, eventually turning around. If we take samples of the particle’s position along its path, before flicking it off in another random trajectory, then we can learn about the shape of the surface. </p>
+
+<p>This is the principle behind <b>Hamiltonian Monte Carlo</b>. It will be easier to see it in action. Here is another simulation, this time using Hamiltonian Monte Carlo, again on the two-dimensional Gaussian target. The paths are flicks of the particle, and the green arrows again represent accepted proposals.
+
+<center><object data="./MCMC_javascript_visualizations_files/applet.html#HamiltonianMC,standard" type="text/html" width="600" height="400"></object></center>
+
+<p>Now the proposals are both within the high-probability region of the target—so many fewer proposals are rejected—and the proposals can get far away from their starting point, so that the chain efficiently explores the whole shape of the target in less time. Effectively, it flows across the target and maps out its whole shape much faster.</p>
+
+<p>The cost of all this elegance is needing more information about the target. Hamiltonian Monte Carlo does a lot more calculation. But it also needs fewer samples to get a good image of the target. Where this really counts is with the donut. Let’s revisit it:
+</p>
+
+<center><object data="./MCMC_javascript_visualizations_files/applet.html#HamiltonianMC,donut" type="text/html" width="600" height="400"></object></center>
+
+<p>Now instead of getting stuck, the chain sweeps around the target. Even though all the chain knows at any moment in time is the local shape of the target—it can’t see the whole distribution like you can here—it still manages to glide smoothly around it. This shouldn’t be so amazing—a ball doesn’t know the shape of the surface it rolls on, yet its path is governed by it.</p>
+
+<h3>Stan is NUTS</h3>
+<p>There are still some improvements to be had. Hamiltonian Monte Carlo needs to be told how many steps to take in its simulated paths. The step number determines how long the path continues before a new flick is made in a new random direction. If it takes too few steps, then it ends up with samples too similar to one another. If it takes too many, it can also end up with samples too similar to one another. Why? Because the path eventually makes a U-turn. Here’s an example:
+</p>
+
+<center><object data="./MCMC_javascript_visualizations_files/applet.html#HamiltonianMC,standard,65" type="text/html" width="600" height="400"></object></center>
+
+<p>The path goes on long enough that it often eats its own tail—it makes an unfortunate U-turn. The algorithm still works, but it isn’t very efficient, because it again explores in local spaces. We can of course tune the number of steps by hand, but that is not so easy when the target distribution is complex.</p>
+
+<p>The <b>No U-Turn Sampler</b> (NUTS) is an approach for adaptively finding a good number of steps. The NUTS algorithm tries to figure out when the path starts to turn around. In order to do this efficiently, it needs to simulate the path in both directions. It looks pretty weird:
+</p>
+
+<center><object data="./MCMC_javascript_visualizations_files/applet.html#NaiveNUTS,standard" type="text/html" width="600" height="400"></object></center>
+
+<p>Notice how the path grows in both directions. This is the algorithm figuring out when the path turns around. When the path starts to turn around, NUTS stops the simulation and takes a sample. Then it flicks the particle in another random direction and starts another simulation. There are lots of little adaptive nudges in these algorithms that help them explore the target more efficiently. An implementation like Stan (<a href="http://mc-stan.org/" rel="noopener" target="_blank">mc-stan.org</a>) uses an advanced version of NUTS that is even slicker.</p>
+
+<h3>Problems Remain</h3>
+<p>Hamiltonian algorithms still have limitations. Some targets are still hard to explore. Here’s a example: a multimodal target. While the paths do a good job exploring each lump of probability mass, they have trouble transitioning among them.
+</p>
+
+<center><object data="./MCMC_javascript_visualizations_files/applet.html#NaiveNUTS,multimodal" type="text/html" width="600" height="400"></object></center>
+
+<p>Targets like this are not so unusual. They arise in many classification and latent variable models. With some clever coding, you can collapse some modes together. But you have to realize what is going on, first. Other issues arise with models that contain very steep changes in log-probability. Wizards are working on solutions to these problems. But even before solutions are found, Hamiltonian samplers are typically much better than Gibbs zombies.</p>
+
+<h3>Read More</h3>
+<p>The BUGS project’s history is summarized in:&nbsp;Lunn, Spiegelhalter, and Best. (2009). “The BUGS project: Evolution, critique and future directions.” <a href="https://doi.org/10.1002%2Fsim.3680">doi:10.1002/sim.3680</a></p>
+<p>Hamiltonian Monte Carlo was originally called “Hybrid Monte Carlo”: Duane, Kennedy, Pendleton, and Roweth (1987) “Hybrid Monte Carlo”. <a href="https://doi.org/10.1016%2F0370-2693%2887%2991197-X">doi:10.1016/0370-2693(87)91197-X</a></p>
+<p>The No U-Turn Sampler (NUTS) was first described by Hoffman and Gelman (2011) “The No-U-Turn Sampler: Adaptively Setting Path Lengths in Hamiltonian Monte Carlo.” <a href="https://arxiv.org/abs/1111.4246">arxiv.org/abs/1111.4246</a></p>
+<p>Michael Betancourt’s “Conceptual Introduction to Hamiltonian Monte Carlo” is only slightly technical and worth your time. <a href="https://arxiv.org/abs/1701.02434" rel="noopener" target="_blank">arxiv.org/abs/1701.02434</a></p>
+<p>&nbsp;</p>
+					
+		</article>		
+			
+	
+	</div>	
+				
+	</div>
+</div>
+
+	
+<script type="text/javascript" src="./MCMC_javascript_visualizations_files/devicepx-jetpack.js"></script>
+<script type="text/javascript" src="./MCMC_javascript_visualizations_files/bootstrap.min.js"></script>
+<script type="text/javascript" src="./MCMC_javascript_visualizations_files/crawford.js"></script>
+<script type="text/javascript" src="./MCMC_javascript_visualizations_files/wp-embed.min.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="./MCMC_javascript_visualizations_files/sharing.min.js"></script>
+<script type="text/javascript">
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-twitter', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+</script>
+<script type="text/javascript" src="./MCMC_javascript_visualizations_files/e-201840.js" async="async" defer="defer"></script>
+<script type="text/javascript">
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:6.5',blog:'97983592',post:'730',tz:'0',srv:'elevanth.org'} ]);
+	_stq.push([ 'clickTrackerInit', '97983592', '730' ]);
+</script>
+   
+
+				<div id="sharing_email" style="display: none;">
+		<form action="http://elevanth.org/blog/2017/11/28/build-a-better-markov-chain/" method="post">
+			<label for="target_email">Send to Email Address</label>
+			<input type="email" name="target_email" id="target_email" value="">
+
+			
+				<label for="source_name">Your Name</label>
+				<input type="text" name="source_name" id="source_name" value="">
+
+				<label for="source_email">Your Email Address</label>
+				<input type="email" name="source_email" id="source_email" value="">
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" title="This field is for validation and should not be changed">
+			
+			<img style="float: right; display: none" class="loading" src="./MCMC_javascript_visualizations_files/loading.gif" alt="loading" width="16" height="16" scale="0">
+			<input type="submit" value="Send Email" class="sharing_send">
+			<a rel="nofollow" href="http://elevanth.org/blog/2017/11/28/build-a-better-markov-chain/#cancel" class="sharing_cancel">Cancel</a>
+
+			<div class="errors errors-1" style="display: none;">
+				Post was not sent - check your email addresses!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				Email check failed, please try again			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Sorry, your blog cannot share posts by email.			</div>
+		</form>
+	</div><iframe scrolling="no" frameborder="0" allowtransparency="true" src="./MCMC_javascript_visualizations_files/widget_iframe.d8c3ececb2f3e7c69df1a2b5ba9241a5.html" title="Twitter settings iframe" style="display: none;"></iframe><img src="./MCMC_javascript_visualizations_files/g.gif" alt=":)" width="6" height="5" id="wpstats" scale="0"><script src="./MCMC_javascript_visualizations_files/null" async=""></script><iframe id="rufous-sandbox" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" style="position: absolute; visibility: hidden; display: none; width: 0px; height: 0px; padding: 0px; border: none;" title="Twitter analytics iframe" src="./MCMC_javascript_visualizations_files/saved_resource.html"></iframe></body></html>

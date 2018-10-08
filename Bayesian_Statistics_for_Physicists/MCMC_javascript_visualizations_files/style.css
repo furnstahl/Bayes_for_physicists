@@ -1,0 +1,138 @@
+/* 
+Theme Name: Crawford
+Description: Crawford is a responsive minimalist theme designed for writers.
+Author: Michael Burrows  
+Author URI: http://www.wpmultiverse.com/
+Theme URI: http://www.wpmultiverse.com/themes/crawford/
+Tags: black, white, light, one-column, responsive-layout, custom-menu, custom-colors, editor-style, featured-images, sticky-post
+Version: 1.0.3
+License: GNU General Public License v3.0
+License URI: http://www.gnu.org/licenses/gpl-3.0.html 
+Crawford WordPress Theme, Copyright 2014 wpmultiverse.com
+Crawford WordPress Theme is distributed under the terms of the GNU GPL
+Text Domain: crawford
+*/ 
+
+body {color:#222; font-family:'Domine',serif;}
+img {display:inline-block; height:auto; max-width:100%;}
+
+/* ----- header & footer ----- */
+header {margin:45px 0;}
+header #logo-tagline {text-align:center; padding-bottom:30px;}
+header #site-name {text-transform:uppercase; font-size:48px; color:#222; font-family:'Oswald',sans-serif; margin:0;}
+header #tagline {margin:20px 0 0 0;}
+header nav {border-top:1px solid #ddd; border-bottom:2px solid #ddd;}
+header nav ul {position:relative; float:left; left:50%; margin:0; padding:0; list-style:none;}
+header nav li {position:relative; float:left; right:50%; margin:6px 0; border-right:1px solid #ddd; padding:8px 20px; display:block; text-transform:uppercase;}
+header nav li a {color:#353535; font-size:13px; font-family:'Oswald',sans-serif;}
+header nav li.last {border:0;}
+header nav .sub-menu {display:none; float:none; position:absolute; left:-1px; z-index:9999; background-color:#eaeaea; top:35px; padding:3px 20px;}
+header nav .sub-menu li {float:none; border:0; position:static; right:0; white-space:nowrap; font-size:12px; text-transform:none; padding:0;}
+header nav .sub-menu li a {font-family:'Domine',serif; padding:4px 0; width:100%; display:block;}
+header nav .menu-item-has-children:hover {background-color:#eaeaea;}
+header nav .menu-item-has-children:hover .sub-menu li a {color:#353535;}
+footer {margin-top:60px;}
+#footer-sidebar {border-top:2px solid #ddd;}
+#footer-sidebar .row {overflow: hidden;}
+#footer-sidebar .col {border-right:1px solid #e1e2e3; padding:30px 0 9999px 0; margin-bottom: -9999px; *margin-bottom: -9999px;}
+#footer-sidebar .left {padding-right:30px;}
+#footer-sidebar .middle {padding-left:30px; padding-right:30px;}
+#footer-sidebar .right {padding-left:30px; border:0;}
+#footer-sidebar .widget {padding-bottom:15px;}
+#footer-sidebar .widget h4 {margin-top:0;}
+#footer-meta {text-align:center; border-top:1px solid #ddd; padding:15px 0;}
+#footer-meta p {color:#aaa; font-size:12px;}
+#footer-meta a {color:#aaa;}
+#footer-meta .menu {position:relative; float:left; left:50%; padding:0; list-style:none; margin-top:0;}
+#footer-meta .menu li {position:relative; float:left; right:50%; margin: 0 5px; font-size:13px;}
+
+/* ----- widgets ----- */
+.widget p {line-height:1.4em;}
+.widget ul {padding-left:0;}
+.widget li {margin:0 0 5px 16px;}
+.widget select {width:100%;}
+.widget_search input[type=text] {width:75%;}
+.widget_calendar table {width:100%;}
+.widget_calendar table td {text-align:center;}
+.widget_calendar table caption {border-bottom:1px solid #ddd; padding-bottom:6px; margin-bottom:10px;}
+.widget_tag_cloud a {font-size:12px!important; background-color:#eee; padding:4px 6px; margin:0 6px 6px 0; display:inline-block;}
+
+/* ----- posts ----- */
+#post-title, .post-title {text-align:center; font-size:32px; margin:0 0 30px 0;}
+.post-date {text-align:center; color:#353535; font-size:16px; font-style:italic;}
+.post-title a {color:#222;}
+.divider {width:100%; text-align:center; color:#ddd; font-size:30px; margin-top:42px;}
+.excerpt-link {width:100%; text-align:center; font-size:14px; font-weight:bold;}
+article {margin-bottom:25px; line-height:1.75em; font-size:18px;}
+article.last .divider {display:none;}
+article h1, article h2, article h3, article h4, article h5, article h6 {font-weight:bold; margin:0 0 25px 0; line-height:1.5em;} 
+article h1 {font-size:32px;}
+article h2 {font-size:29px;}
+article h3 {font-size:26px;}
+article h4 {font-size:24px;}
+article h5 {font-size:21px;}
+article h6 {font-size:18px;}
+article p, article ul, article ol {margin-bottom:25px;}
+article ul ul, article ol ol {margin-bottom:0}
+article li {margin-bottom:10px;}
+article table {width:100%; margin-bottom:25px;}
+article table td, article table th {border:1px solid #ddd; padding:5px 10px; font-size:16px;}
+article blockquote {border-left:3px solid #20b2aa; padding-left:30px;}
+article blockquote cite {font-style:italic;}
+article dl {margin-bottom:25px;}
+article dt {font-weight:bold; font-size:17px;}
+article dd {margin:0 0 10px 0; font-size:16px;}
+#featured-image, .featured-image {margin-bottom:30px; text-align:center;}
+#featured-image img, .featured-image img {padding-bottom:3px; border-bottom:1px solid #ddd;}
+#post-tags {font-size:14px; text-align:center; margin-top:45px;}
+#post-tags a {color:#353535; margin-right:10px; font-style:italic; display:inline-block;}
+#page-links {text-align:center; font-size:14px;}
+.wp-caption, .gallery-caption {max-width:97%; font-size:14px;}
+.wp-caption-text {font-size:14px;}
+.aligncenter {text-align:center;}
+.alignleft {float:left; margin-right:15px;}
+.alignright {float:right; margin-left:15px;}
+.sticky {background-color:#f0f8ff; padding:20px 60px;}
+.sticky .post-title {font-size:40px;}
+.sticky .divider {display:none;}
+.pager {width:100%; text-align:center; clear:both; padding-top:80px; text-transform:uppercase;}
+.pager a.page-numbers, #page-links a {background-color:#222; color:#fff; padding:4px 10px;}
+.pager .current {padding:4px 10px;}
+.pager a.page-numbers:hover, #page-links a:hover {background-color:#ddd; color:#222;}
+.pager a.prev, .pager a.next {background-color:#fff; color:#222;}
+.pager a.prev:hover, .pager a.next:hover {background-color:#fff; color:#555;}
+.pager .current {background-color:#eee; color:#222;}
+
+/* ----- comments ----- */
+#comments {margin-top:60px; margin-bottom:45px; border-top:1px solid #ddd; padding-top:25px;}
+#comments-title {font-size:18px;}
+#respond {margin-top:30px;}
+.comment-form-comment label {width:100%; margin-bottom:10px;}
+.comment-list {list-style:none; padding-left:0;}
+.comment-list li {margin-bottom:20px;}
+.comment-author-name {margin-bottom:3px; font-weight:bold;}
+.comment-author-name a {color:#222;}
+.comment-body p {margin-top:0; line-height:1.75em;}
+.bypostauthor {padding:5px 20px; background-color:#f0f8ff;}
+.comment-awaiting-moderation {color:#aaa; font-style:italic; background-color:#ebebeb; padding:8px;}
+#commentform label, .form-allowed-tags {display:none;}
+
+/* ----- form elements ----- */
+input[type=text], input[type=email], input[type=password], input[type=search], textarea {border:1px solid #ddd; margin-right:5px; padding:12px; width:85%; font-size:14px; color:#222; margin-bottom:10px; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px;}
+input[type=submit], input[type=reset] {background-color:#222; border:0; color:#fff; padding:10px 12px; text-align:center; font-size:14px;}
+input[type=password] {width:100%;}
+.screen-reader-text {display:none;}
+
+/* -- media queries -- */
+@media (max-width:768px) {	
+	header {margin:25px 0;}
+	#logo a {font-size:36px;}
+	header nav li {width:100%; border:0; float:none; text-align:center;}
+	header nav .menu-item-has-children:hover {background-color:transparent;}	
+	header .navbar-toggle {background-color:#222; float:left; position:absolute; margin-top:9px; z-index:9999;}
+	header .navbar-toggle span {background-color:#fff;}
+}
+@media (max-width:992px) {	
+	#footer-sidebar .col {border:0;}
+	#footer-sidebar .left, #footer-sidebar .middle, #footer-sidebar .right {padding-left:15px; padding-right:15px;}	
+}
