@@ -13120,10 +13120,10 @@ where $I$ is the identity matrix and $B B^\intercal = \Sigma$ (e.g., a Cholesky 
 
 
 
-<div id="551ef88b-280e-4f19-bd17-54a94869d59f"></div>
+<div id="d324b746-56f9-470a-ae54-560802266930"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#551ef88b-280e-4f19-bd17-54a94869d59f');
+var element = $('#d324b746-56f9-470a-ae54-560802266930');
 IPython.OutputArea.auto_scroll_threshold = 9999;
 </script>
 </div>
@@ -13721,7 +13721,15 @@ $$  \kappa_{\rm SE}(x,x') = \sigma^2 e^{-(x-x')^2/2l^2} $$</p>
 how rapidly they wiggle.  Comparing to our expression above for the bivariate normal case,
 we see that $\rho$ is given by $e^{-(x-x')^2/2l^2}$.  So when $x$ and $x'$ are close, 
 $\rho \approx 1$ and the value of the function is highly correlated.  When $x$ and $x'$ are far apart, $\rho \rightarrow 0$, and they become independent (thus $l$ plays the role of a correlation length).</p>
-<p>Let's generate some GPs with this kernel!</p>
+<p>Let's generate some GPs with this kernel! For the function $f(x)$ we write draws as
+$$
+  f(x) \sim \mathcal{GP[\mu(x),\kappa(x,x')]}
+$$
+where $\mu(x)$ is the mean at each $x$ and $\kappa(x,x')$ is the covariance between $x$ and $x'$.  In practice we have a finite set of $N$ points $\textbf{x} = \{x_i\}_{i=1}^{N}$ with corresponding function values $\textbf{f}=\{f(x_i)\}_{i=1}^{N}$.
+We form the mean vector $\boldsymbol{\mu} = m(\textbf{x})$ and the covariance matrix $K_{ij} = \kappa(x_i,x_j)$. Then
+$$  \textbf{f} \mid \textbf{x} \sim \mathcal{N}(\boldsymbol{\mu},K)
+$$
+are draws from a multivariate normal distribution.  Try it:</p>
 
 </div>
 </div>
@@ -13799,7 +13807,7 @@ $\rho \approx 1$ and the value of the function is highly correlated.  When $x$ a
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now we train it on some data:</p>
+<p>Now we train it on some data (see references for details):</p>
 
 </div>
 </div>
