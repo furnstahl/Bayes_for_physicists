@@ -6,4 +6,4 @@ In the Bayesian_Statistics_for_Physicists directory there is a Jupyter notebook 
 
 This notebook has been split up into separate notebooks for each of the parts for further development, in files starting with "BSFP".
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/furnstahl/Bayes_for_physicists/master)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/furnstahl/Bayes_for_physicists/master?filepath=Bayesian_Statistics_for_Physicists)
